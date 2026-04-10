@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>DESCRIPTION</h2>
+
+<em>i.s2_id.filter</em> searches Sentinel-2 Level-2A scenes using
+<a href="https://eodag.readthedocs.io/">EODAG</a> and returns matching scene IDs.
+The module filters by time range, area of interest (AOI), tile ID, and cloud cover.
+
+<p>
+The search is currently configured for:
+</p>
+<ul>
+<li>Provider: <tt>cop_dataspace</tt> (CDSE)</li>
+<li>Collection: <tt>S2_MSI_L2A</tt></li>
+</ul>
+
+<p>
+If no manual bounding-box options are provided, the current GRASS region is used
+as AOI by default.
+</p>
+
+<p>
+If any one of <tt>lonmin</tt>, <tt>lonmax</tt>, <tt>latmin</tt>, or <tt>latmax</tt> is set,
+all four values must be provided.
+</p>
+
+<p>
+When flag <b>-s</b> is used, <tt>stac_collection</tt> is required. The module reads
+the end of the temporal extent from the given STAC collection and sets:
+</p>
+<ul>
+<li><tt>start_time</tt> to one day after that end date</li>
+<li><tt>end_time</tt> to today</li>
+</ul>
+
+<h2>OUTPUT</h2>
+
+<p>
+By default, the module writes a JSON object. The keys are Sentinel-2 scene IDs and
+the values contain selected metadata:
+</p>
+
+<ul>
+<li><tt>acquisition_date</tt>: Scene acquisition datetime</li>
+<li><tt>cloud_cover</tt>: Cloud cover percentage</li>
+<li><tt>tile_id</tt>: Sentinel-2 MGRS tile ID</li>
+</ul>
+
+<div class="code"><pre>
+{
+	"S2A_MSIL2A_20250401T092031_N0510_R093_T34SFH_20250401T125901": {
+		"acquisition_date": "2025-04-01T09:20:31Z",
+		"cloud_cover": 12.4,
+		"tile_id": "34SFH"
+	}
+}
+</pre></div>
+
+<p>
+When <b>-p</b> is used, results are printed as formatted text messages.
+</p>
+
+<h2>EXAMPLES</h2>
+
+<h3>1. Filter by time range, tile ID, and current region (default AOI)</h3>
+
+<div class="code"><pre>
+# Region is used as AOI by default
+i.s2_id.filter start_time=2025-01-01 end_time=2025-01-31 cloud_cover=20 tile_id=34SFH
+</pre></div>
+
+<h3>2. Filter by explicit bounding box</h3>
+
+<div class="code"><pre>
+i.s2_id.filter start_time=2025-01-01 end_time=2025-01-31 cloud_cover=30 \
+	lonmin=23.60 lonmax=23.90 latmin=37.85 latmax=38.10
+</pre></div>
+
+<h3>3. Continue search from STAC collection temporal extent</h3>
+
+<div class="code"><pre>
+i.s2_id.filter -s stac_collection=https://example.org/stac/collections/s2_indices.json \
+	lonmin=23.60 lonmax=23.90 latmin=37.85 latmax=38.10 cloud_cover=40
+</pre></div>
+
+<h3>4. Write JSON output to file</h3>
+
+<div class="code"><pre>
+i.s2_id.filter start_time=2025-01-01 end_time=2025-01-31 \
+	cloud_cover=20 output=s2_results.json
+</pre></div>
+
+<h2>NOTES</h2>
+
+<ul>
+<li>Requires working EODAG installation. For only searching Metadata, no provider credentials are needed.</li>
+</ul>
+
+<h2>SEE ALSO</h2>
+
+<ul>
+<li><a href="https://eodag.readthedocs.io/en/stable/getting_started_guide/install.html">EODAG installation</a></li>
+<li><a href="https://stacspec.org/en">STAC specification</a></li>
+</ul>
+
+<h2>AUTHOR</h2>
+
+Jonas Pischke,
+<a href="https://www.mundialis.de/">mundialis GmbH &amp; Co. KG</a>, Germany
+
+</body>
+</html>
