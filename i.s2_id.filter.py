@@ -220,7 +220,7 @@ def main() -> None:
                 json.dump(result, f, indent=4)
         else:
             # write result to stdout
-            sys.stdout.write(json.dumps(result))
+            sys.stdout.write(json.dumps(result), indent=4)
 
 
 if __name__ == "__main__":
