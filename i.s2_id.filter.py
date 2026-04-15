@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# ruff: noqa: D100, DTZ011, PLR0914
+# ruff: noqa: D100, DTZ011, PLR0914, PTH123
 #
 ############################################################################
 # MODULE:      i.s2_id.filter
@@ -198,7 +198,7 @@ def main() -> None:
 
     if len(result) == 0:
         grass.message(
-            "No Sentinel-2 scenes found matching the search criteria."
+            "No Sentinel-2 scenes found matching the search criteria.",
         )
         return
 
@@ -210,17 +210,16 @@ def main() -> None:
             grass.message(
                 f"S2 ID: {key}\n Acquisition Date: {value['acquisition_date']}"
                 f"\n Cloud Cover: {value['cloud_cover']}%\n Tile ID:"
-                f"{value['tile_id']}"
+                f"{value['tile_id']}",
             )
             grass.message("-----------------------------")
+    # if output path is provided, write result to file
+    elif output:
+        with open(output, "w", encoding="utf-8") as f:
+            json.dump(result, f, indent=4)
     else:
-        # if output path is provided, write result to file
-        if output:
-            with open(output, "w") as f:
-                json.dump(result, f, indent=4)
-        else:
-            # write result to stdout
-            sys.stdout.write(json.dumps(result, indent=4))
+        # write result to stdout
+        sys.stdout.write(json.dumps(result))
 
 
 if __name__ == "__main__":
