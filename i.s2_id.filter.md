@@ -34,11 +34,11 @@ the values contain selected metadata:
 
 ```json
 {
-	"S2A_MSIL2A_20250401T092031_N0510_R093_T34SFH_20250401T125901": {
-		"acquisition_date": "2025-04-01T09:20:31Z",
-		"cloud_cover": 12.4,
-		"tile_id": "34SFH"
-	}
+    "S2A_MSIL2A_20250401T092031_N0510_R093_T34SFH_20250401T125901": {
+        "acquisition_date": "2025-04-01T09:20:31Z",
+        "cloud_cover": 12.4,
+        "tile_id": "34SFH"
+}
 }
 ```
 
@@ -57,21 +57,21 @@ i.s2_id.filter start_time=2025-01-01 end_time=2025-01-31 cloud_cover=20 tile_id=
 
 ```sh
 i.s2_id.filter start_time=2025-01-01 end_time=2025-01-31 cloud_cover=30 \
-		lonmin=23.60 lonmax=23.90 latmin=37.85 latmax=38.10
+    lonmin=23.60 lonmax=23.90 latmin=37.85 latmax=38.10
 ```
 
 ### 3. Continue search from STAC collection temporal extent
 
 ```sh
 i.s2_id.filter -s stac_collection=https://example.org/stac/collections/s2_indices.json \
-		lonmin=23.60 lonmax=23.90 latmin=37.85 latmax=38.10 cloud_cover=40
+     lonmin=23.60 lonmax=23.90 latmin=37.85 latmax=38.10 cloud_cover=40
 ```
 
 ### 4. Write JSON output to file
 
 ```sh
 i.s2_id.filter start_time=2025-01-01 end_time=2025-01-31 \
-		cloud_cover=20 output=s2_results.json
+    cloud_cover=20 output=s2_results.json
 ```
 
 ## NOTES
